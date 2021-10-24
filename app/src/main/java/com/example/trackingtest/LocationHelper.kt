@@ -7,18 +7,22 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.widget.Toast
 
 class LocationHelper {
-    var LOCATION_REFRESH_TIME = 5*1000
+    var LOCATION_REFRESH_TIME = 5 * 1000
+
     @SuppressLint("MissingPermission")
     fun startListeningUserLocation(context: Context, myListener: MyLocationListener) {
-        Toast.makeText(context,"sss",Toast.LENGTH_LONG).show()
         val mLocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val locationListener: LocationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
+                val intent = Intent()
+                intent.putExtra("location", location)
+                intent.action = "UPDATE_LOCATION"
+                context.sendBroadcast(intent)
                 myListener.onLocationChanged(location) // calling listener to inform that updated location is available
             }
+
             override fun onProviderEnabled(provider: String) {}
             override fun onProviderDisabled(provider: String) {}
             override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}

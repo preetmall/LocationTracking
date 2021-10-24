@@ -13,6 +13,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import cretaeFile
+import java.util.*
 
 
 class LocationService : Service() {
@@ -38,6 +39,7 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        val timer = Timer()
         //update location
         LocationHelper().startListeningUserLocation(
             this, object : MyLocationListener {
